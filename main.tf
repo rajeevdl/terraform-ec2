@@ -11,6 +11,40 @@ resource "aws_instance" "webserver"{
   tags = {
     "Name" = "WEBSERVER-RAJEEV"
   }
+
+  key_name = "rajeev-key"
+
+  provisioner "local-exec" {
+        command = "echo ${self.public_ip} > ipaddress.txt"
+    } 
+
+    provisioner "local-exec" {
+        command = "echo ${self.private_ip} >> ipaddress.txt"
+    }
+
+    provisioner "file" {
+        source = "listing.sh"
+        destination = "/tmp/listing.sh"
+        connection {
+            type = "ssh"
+            host = self.public_ip
+            user = "ubuntu"
+            private_key = file("./rajeev-key.pem")
+        }
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /tmp/listing.sh",
+            "/tmp/listing.sh"   
+        ]
+        connection {
+            type = "ssh"
+            host = self.public_ip
+            user = "ubuntu"
+            private_key = file("./rajeev-key.pem")
+        }
+    }
 }
 
 output "webserveripaddress" {

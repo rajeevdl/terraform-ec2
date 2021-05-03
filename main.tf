@@ -73,7 +73,7 @@ resource "aws_security_group" "websg" {
 }
 
 variable "ec2-tags" {
-  default = ["WEBSERVER-RAJEEV-1","WEBSERVER-RAJEEV-2"]
+  default = ["WEBSERVER-RAJEEV-11","WEBSERVER-RAJEEV-22"]
   description = "Tags for EC2 Instances"
 }
 

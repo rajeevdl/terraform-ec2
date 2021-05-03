@@ -126,5 +126,5 @@ resource "aws_lb_listener" "mylblistener" {
 }
 
 output "albdns" {
-  value = aws_alb.weblb.dns_name
+  value = aws_alb.mylb.dns_name
 }
